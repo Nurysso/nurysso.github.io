@@ -1,0 +1,213 @@
+---
+import Icon from './Icon.astro';
+import HatTiling from './HatTiling.astro';
+import { site, socials, mastodon } from '../../data/site.js';
+import { socialIcon } from '../../lib/icons.js';
+
+const links = [...socials, { label: 'Mastodon', href: mastodon }];
+---
+
+<section id="contact" class="contact" aria-labelledby="contact-title">
+  <div class="container">
+    <div class="panel h-card" data-reveal>
+      <div class="art" aria-hidden="true">
+        <HatTiling name="hat-contact" width={24.8} height={20} offset={[-30, 18]} rotate={19} />
+      </div>
+
+      <div class="inner">
+        <p class="h-eyebrow"><span><b>~/</b>contact</span></p>
+
+        <h2 id="contact-title" class="title">
+          Got a hard backend <br />or <span class="hl">tooling problem?</span>
+        </h2>
+        <p class="sub">Open to freelance contracts and full-time roles. Email me what you're building.</p>
+
+        <div class="email-row">
+          <a class="email" href={`mailto:${site.email}`}>{site.email}</a>
+          <button type="button" class="copy" data-copy={site.email} aria-label="Copy email address">copy</button>
+        </div>
+
+        <ul class="socials">
+          {
+            links.map((s) => (
+              <li>
+                <a class="social" href={s.href} target="_blank" rel="noopener noreferrer">
+                  <Icon name={socialIcon(s.label)} size={18} />
+                  {s.label}
+                  <span class="go"><Icon name="arrow-up-right" size={14} /></span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    padding-block: clamp(40px, 6vw, 80px) var(--section-y);
+  }
+
+  .panel {
+    overflow: hidden;
+    padding: clamp(28px, 6vw, 80px);
+    border-radius: clamp(var(--r-lg), 3vw, 36px);
+    background: var(--card-bg);
+  }
+
+  .art {
+    position: absolute;
+    top: 50%;
+    right: -8%;
+    z-index: -1;
+    width: min(46rem, 80%);
+    aspect-ratio: 520 / 420;
+    transform: translateY(-50%);
+    opacity: 0.7;
+    pointer-events: none;
+    -webkit-mask-image: radial-gradient(closest-side, #000 50%, transparent 100%);
+    mask-image: radial-gradient(closest-side, #000 50%, transparent 100%);
+  }
+
+  /* On narrow screens the text runs under the tiling, so it is fainter there and gone on phones */
+  @media (max-width: 899px) {
+    .art {
+      opacity: 0.35;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .art {
+      display: none;
+    }
+  }
+
+  .inner {
+    display: grid;
+    gap: 0;
+    justify-items: start;
+  }
+
+  .title {
+    margin-top: clamp(22px, 3.5vw, 36px);
+    font-family: var(--font-display);
+    font-size: clamp(2.3rem, 1.2rem + 4.4vw, 5rem);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+  }
+
+  .sub {
+    max-width: 34rem;
+    margin-top: 18px;
+    font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+    color: var(--fg-muted);
+  }
+
+  .email-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 18px;
+    margin-top: clamp(30px, 5vw, 52px);
+  }
+
+  .email {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 0.7rem + 2.5vw, 2.5rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    overflow-wrap: anywhere;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: color-mix(in srgb, var(--accent) 50%, transparent);
+    text-underline-offset: 8px;
+    transition: text-decoration-color 0.2s var(--ease-out);
+  }
+
+  .email:hover {
+    text-decoration-color: var(--accent);
+  }
+
+  /* The click handler in BaseLayout swaps this button's text to "copied", so the icon is drawn with CSS */
+  .copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 16px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--card-bg);
+    color: var(--fg-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    transition:
+      border-color 0.2s var(--ease-out),
+      color 0.2s var(--ease-out),
+      background-color 0.2s var(--ease-out);
+  }
+
+  .copy::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='14' height='14' x='8' y='8' rx='2'/%3E%3Cpath d='M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='14' height='14' x='8' y='8' rx='2'/%3E%3Cpath d='M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+
+  .copy:hover {
+    border-color: var(--accent);
+    color: var(--accent-text);
+    background: var(--card-bg-hover);
+  }
+
+  .socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: clamp(30px, 4.5vw, 48px);
+    list-style: none;
+    padding: 0;
+  }
+
+  .social {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 0 18px 0 16px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--card-bg);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition:
+      border-color 0.2s var(--ease-out),
+      background-color 0.2s var(--ease-out),
+      transform 0.25s var(--ease-out);
+  }
+
+  .social .go {
+    display: inline-flex;
+    color: var(--fg-subtle);
+    transition:
+      transform 0.25s var(--ease-out),
+      color 0.2s var(--ease-out);
+  }
+
+  .social:hover {
+    border-color: var(--accent);
+    background: var(--card-bg-hover);
+    transform: translateY(-2px);
+  }
+
+  .social:hover .go {
+    color: var(--accent-text);
+    transform: translate(2px, -2px);
+  }
+</style>

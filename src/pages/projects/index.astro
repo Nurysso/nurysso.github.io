@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import ProjectGrid from '../../components/ProjectGrid.astro';
+import { projects } from '../../data/projects.js';
+---
+
+<BaseLayout title="Projects · Nurysso" description="Projects by Nurysso: Eulix, a local-first code-intelligence platform, plus CLI tools, Hyprland dotfiles and a custom Linux kernel." current="work">
+  <Section id="projects" index="01" label="Projects" title="Everything I've built" level="h1">
+    <ProjectGrid projects={projects} />
+  </Section>
+</BaseLayout>
